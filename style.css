@@ -21,8 +21,8 @@ body {
   background-color: #251605;
   width: 400px;
   min-width: 400px;
-  height: 535px;
-  min-height: 535px;
+  height: 515px;
+  min-height: 515px;
   border: .75em solid #251605;
   border-radius: 6px;
 }
@@ -34,12 +34,18 @@ body {
   justify-content: end;
   flex-grow: 1;
   width: 300px;
-  height: 95px;
+  min-height: 90px;
+  max-height: 90px;
   margin: 5px;
-  padding: 5px;
-  padding-right: 7px;
+  padding: 0;
+  padding-right: 4px;
   font-size: 6em;
   border-radius: 4px;
+}
+
+.result {
+  padding: 0;
+  margin: 0;
 }
 
 .button-container {

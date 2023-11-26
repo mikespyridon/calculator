@@ -3,46 +3,85 @@ let secondNum = '';
 let operator = null;
 let result = '';
 
-
 const add = (num1, num2) => {
-  return num1 + num2;
+  return Number(num1) + Number(num2);
 }
 
 const subtract = (num1, num2) => {
-  return num1 - num2;
+  return Number(num1) - Number(num2);
 }
 
 const multiply = (num1, num2) => {
-  return num1 * num2;
+  return Number(num1) * Number(num2);
 }
 
 const divide = (num1, num2) => {
-  return num1 / num2;
+  return Number(num1) / Number(num2);
 }
 
 const modulus = (num1, num2) => {
-  return num1 % num2;
+  return Number(num1) % Number(num2);
 }
 
 const operate = (operator, num1, num2) => {
-  return operator(num1, num2);
+  return operator(Number(num1), Number(num2));
 }
 
-const checkNumbers = (num) => {
+const firstOrSecondNum = () => {
   if (operator === null) {
-    firstNum += num;
+    return 'firstNum';
   } else {
-    secondNum += num;
+    return 'secondNum';
   }
 }
 
-const checkNumClicked = (num) =>{
+const generateNums = (num) => {
+  if (firstOrSecondNum() === 'firstNum') {
+    if (firstNum.length < 8) {
+      firstNum += String(num);
+      screen.textContent = firstNum;
+    }
+  } else {
+    if (secondNum.length < 8) {
+      secondNum += String(num);
+      screen.textContent = secondNum;
+    }
+  }
 
+  // if (secondNum = '0' && operator === '/') {
+  //   result = 'Idiot';
+  // }
+
+  if (firstNum !== '' && firstNum !== 0 && secondNum !== 0 && secondNum !== '') {
+    result = operate(operator, firstNum, secondNum);
+  }
+
+  // if (operator !== null) {
+  //   firstNum = result;
+  //   //secondNum = '';
+  // }
+}
+
+let operatorResult = (op) => {
+  result = operate(op, firstNum, secondNum);
+
+  if (String(result).length > 8) {
+    result = Math.round(result);
+    console.log(result)
+  }
+
+  if (String(result).length > 8) {
+    result = 'NaN';
+  }
+
+  screen.textContent = result;
+  firstNum = result;
 }
 
 const clearBtn = document.querySelector('.clear');
 const equalsBtn = document.querySelector('.equals');
 const signBtn = document.querySelector('.sign');
+const decimalBtn = document.querySelector('.decimal');
 const addBtn = document.querySelector('.add');
 const subtractBtn = document.querySelector('.subtract');
 const multiplyBtn = document.querySelector('.multiply');
@@ -61,94 +100,114 @@ const nineBtn = document.querySelector('.nine');
 
 const screen = document.querySelector('.display');
 
-const number = document.createElement('p');
-
 equalsBtn.addEventListener('click', () => {
-  screen.textContent = 0;
-  screen.textContent = operate(operator, firstNum, secondNum)
+  if (String(result).length > 8) {
+    result = result.toFixed(4);
+    console.log(result)
+  }
+ 
+  screen.textContent = result;
+  firstNum = result;
+  operator = null;
+  secondNum = "";
 });
 
 addBtn.addEventListener('click', () => {
   operator = add;
+  operatorResult(operator);
 })
 
 subtractBtn.addEventListener('click', () => {
   operator = subtract;
+  operatorResult(operator);
 })
 
 multiplyBtn.addEventListener('click', () => {
   operator = multiply;
+  operatorResult(operator);
 })
 
 divideBtn.addEventListener('click', () => {
   operator = divide;
+  operatorResult(operator);
 })
 
 modulusBtn.addEventListener('click', () => {
   operator = modulus;
+  operatorResult(operator);
 })
 
 clearBtn.addEventListener('click', () => {
   firstNum = '';
   secondNum = '';
   operator = null;
+  result = '';
   screen.textContent = '0';
 });
 
 signBtn.addEventListener('click', () => {
+  console.log(firstNum)
+  if (firstOrSecondNum() === 'firstNum' && firstNum > 0) {
+    firstNum = Number(firstNum) * -1;
+    screen.textContent = firstNum;
+  } else if (firstOrSecondNum() === 'firstNum' && firstNum < 0) {
+    firstNum = Math.abs(Number(firstNum));
+    screen.textContent = firstNum;
+  } if (firstOrSecondNum() === 'secondNum' && Number(secondNum) > 0) {
+    secondNum = Number(secondNum) * -1;
+    screen.textContent = secondNum;
+  } else if (firstOrSecondNum() === 'secondNum' && Number(secondNum) < 0) {
+    secondNum = Math.abs(Number(secondNum));
+    screen.textContent = secondNum;
+  } 
+  console.log(`first: ${firstNum}`);
+  console.log(`second: ${secondNum}`);
+});
 
+decimalBtn.addEventListener('click', () => {
+  if (firstNum !== '') {
+    generateNums('.');
+  } else if (secondNum !== '') {
+    generateNums('.')
+  }
 });
 
 zeroBtn.addEventListener('click', () => {
-  screen.textContent = 0;
-  checkNumbers(0);
+  generateNums('0');
 });
 
 oneBtn.addEventListener('click', () => {
-  checkNumbers('1');
-  screen.textContent = firstNum
-})
+  generateNums('1');
+});
 
 twoBtn.addEventListener('click', () => {
-  screen.textContent = 2;
-  checkNumbers(2);
+  generateNums('2');
 });
 
 threeBtn.addEventListener('click', () => {
-  screen.textContent = 3;
-  checkNumbers(3);
+  generateNums('3');
 });
 
 fourBtn.addEventListener('click', () => {
-  screen.textContent = 4;
-  checkNumbers(4);
+  generateNums('4');
 });
 
 fiveBtn.addEventListener('click', () => {
-  screen.textContent = 5;
-  checkNumbers(5);
+  generateNums('5');
 });
 
 sixBtn.addEventListener('click', () => {
-  screen.textContent = 6;
-  checkNumbers(6);
+  generateNums('6');
 });
 
 sevenBtn.addEventListener('click', () => {
-  screen.textContent = 7;
-  checkNumbers(7);
+  generateNums('7');
 });
 
 eightBtn.addEventListener('click', () => {
-  screen.textContent = 8;
-  checkNumbers(8);
+  generateNums('8');
 });
 
 nineBtn.addEventListener('click', () => {
-  screen.textContent = 9;
-  checkNumbers(9);
+  generateNums('9');
 });
-
-console.log(firstNum)
-console.log(secondNum)
-console.log(operator)
