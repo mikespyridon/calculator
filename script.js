@@ -47,15 +47,6 @@ const generateNums = (num) => {
       screen.textContent = secondNum;
     }
   }
-
-  // if (firstNum !== '' && firstNum !== 0 && secondNum !== 0 && secondNum !== '') {
-  //   result = operate(operator, firstNum, secondNum);
-  // }
-
-  // if (operator !== null) {
-  //   firstNum = result;
-  //   //secondNum = '';
-  // }
 }
 
 let operatorResult = (op) => {
@@ -103,7 +94,6 @@ const screen = document.querySelector('.display');
 
 equalsBtn.addEventListener('click', () => {
   operatorResult(operator)
- 
   screen.textContent = firstNum;
 });
 
