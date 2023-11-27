@@ -48,13 +48,9 @@ const generateNums = (num) => {
     }
   }
 
-  // if (secondNum = '0' && operator === '/') {
-  //   result = 'Idiot';
+  // if (firstNum !== '' && firstNum !== 0 && secondNum !== 0 && secondNum !== '') {
+  //   result = operate(operator, firstNum, secondNum);
   // }
-
-  if (firstNum !== '' && firstNum !== 0 && secondNum !== 0 && secondNum !== '') {
-    result = operate(operator, firstNum, secondNum);
-  }
 
   // if (operator !== null) {
   //   firstNum = result;
@@ -65,9 +61,12 @@ const generateNums = (num) => {
 let operatorResult = (op) => {
   result = operate(op, firstNum, secondNum);
 
+  if (secondNum === '0' && op === divide) {
+    result = 'Idiot';
+  }
+
   if (String(result).length > 8) {
     result = Math.round(result);
-    console.log(result)
   }
 
   if (String(result).length > 8) {
@@ -75,6 +74,8 @@ let operatorResult = (op) => {
   }
 
   screen.textContent = result;
+  operator = null;
+  secondNum = "";
   firstNum = result;
 }
 
@@ -101,41 +102,45 @@ const nineBtn = document.querySelector('.nine');
 const screen = document.querySelector('.display');
 
 equalsBtn.addEventListener('click', () => {
-  if (String(result).length > 8) {
-    result = result.toFixed(4);
-    console.log(result)
-  }
+  operatorResult(operator)
  
-  screen.textContent = result;
-  firstNum = result;
-  operator = null;
-  secondNum = "";
+  screen.textContent = firstNum;
 });
 
 addBtn.addEventListener('click', () => {
+  if (operator !== null) {
+    operatorResult(add)
+  } 
   operator = add;
-  operatorResult(operator);
-})
+});
 
 subtractBtn.addEventListener('click', () => {
+  if (operator !== null) {
+    operatorResult(subtract)
+  } 
   operator = subtract;
-  operatorResult(operator);
-})
+});
 
 multiplyBtn.addEventListener('click', () => {
+  if (operator !== null) {
+    operatorResult(multiply)
+  } 
   operator = multiply;
-  operatorResult(operator);
-})
+});
 
 divideBtn.addEventListener('click', () => {
+  if (operator !== null) {
+    operatorResult(divide)
+  } 
   operator = divide;
-  operatorResult(operator);
-})
+});
 
 modulusBtn.addEventListener('click', () => {
+  if (operator !== null) {
+    operatorResult(modulus)
+  } 
   operator = modulus;
-  operatorResult(operator);
-})
+});
 
 clearBtn.addEventListener('click', () => {
   firstNum = '';
@@ -178,6 +183,8 @@ zeroBtn.addEventListener('click', () => {
 
 oneBtn.addEventListener('click', () => {
   generateNums('1');
+  console.log(firstNum)
+  console.log(`second: ${secondNum}`)
 });
 
 twoBtn.addEventListener('click', () => {
